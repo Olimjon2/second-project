@@ -1,6 +1,7 @@
 const $ = el => document.querySelector(el);
 
 const watch = $('.play__button'),
+    videoParent = $('.video'),
     play = $('.video__content-icon'),
     content = $('.video__content'),
     pause = $('.video__pause'),
@@ -12,10 +13,15 @@ const watch = $('.play__button'),
     range = $('.video__content-range_front'),
     rangeParent = $('.video__content-range'),
     volumeEl = $('.video__content-volume'),
-    volumeFront = $('.video__content-volume_front');
+    volumeFront = $('.video__content-volume_front'),
+    fm = $('.video__speed'),
+    slowSpeeds = $('.slow__speed'),
+    normSpeeds = $('.norm__speed'),
+    speedUps = $('.speed__up');
 
 /*----------------- время продолжения---------- */
-video.addEventListener('loadedmetadata', () => {
+video.addEventListener('loadedmetadata', (e) => {
+    console.log(e);
     const durTime = video.duration
     videoDuration.innerHTML = timeDecoder(durTime);
 })
@@ -26,62 +32,45 @@ video.addEventListener('loadedmetadata', () => {
 watch.addEventListener('click', function () {
     this.style.display = 'none';
     content.style.display = 'flex';
-})
-
-play.addEventListener('click', function () {
-    play.style.display = 'none';
     pause.style.display = 'flex';
+    play.style.display = 'none';
     video.play();
 })
 
 pause.addEventListener('click', function () {
-    pause.style.display = 'none';
     play.style.display = 'flex';
+    pause.style.display = 'none';
     video.pause();
+    fm.style.display = 'none'
+})
+
+play.addEventListener('click', function () {
+    pause.style.display = 'flex';
+    play.style.display = 'none';
+    video.play();
+    fm.style.display = 'block'
 })
 
 mute.addEventListener('click', function () {
         mute.style.display = 'none';
         onmute.style.display = 'block';
-        video.volume = 0;
+        video.volume = 1;
 })
 
 onmute.addEventListener('click', function () {
         mute.style.display = 'block';
         onmute.style.display = 'none';
-        video.volume = 1;
+        video.volume = 0;
 })
-/* ----------------Событие мыши--------------- */
-// let lineFlag = false;
-// rangeParent.addEventListener('mousedown', function (e) {
-//     lineFlag = true;
-//     volume = video.volume;
-// })
-// window.addEventListener('mousemove', function (e) {
-//     if(lineFlag){
-//         const { offsetX } = e;
-//         const  parentWidth = rangeParent.clientWidth;
-//         const percent = 100 * offsetX / parentWidth;
-//         video.currentTime = video.duration * percent / 100;
-//         video.volume = 0;
-//         let pos = document.querySelectorAll('.d-none');
-//         for(let i = 0; i < pos.length; i++) {
-//             pos[i].style.display = 'none';
-//         }
-//     }
-// })
-// window.addEventListener('mouseup', function () {
-//     lineFlag = false;
-//     video.volume = 1;
-//     let pos = document.querySelectorAll('.d-none');
-//     for(let i = 0; i < pos.length; i++) {
-//         pos[i].style.display = 'block';
-//     }
-// })
-/* --------------------------------------------- */
+
 function speedUp() {
     video.play();
     video.playbackRate = 2;
+}
+
+function normalSpeed() {
+    video.play();
+    video.playbackRate = 1;
 }
 
 function slowDown() {
@@ -89,10 +78,6 @@ function slowDown() {
     video.playbackRate = 0.5;
 }
 
-function normalSpeed() {
-    video.play();
-    video.playbackRate = 1;
-}
 
 video.addEventListener('volumechange', function() {
     const percent = Math.floor(this.volume * 100);
@@ -112,6 +97,20 @@ volumeEl.addEventListener('wheel', function(e) {
         else video.volume += 0.1;
     } 
 })
+let vol = false;
+volumeEl.addEventListener('mousedown', function (e) {
+   vol = true; 
+})
+volumeEl.addEventListener('mousemove', function (e) {
+    if (vol) {
+        const { offsetX } = e;
+        const volWidth = volumeEl.clientWidth;
+        const percent = 100 * offsetX / volWidth;
+        console.log(percent/100);
+        // video.volume = percent/100  ;
+        
+    }
+})
 /* ------------------------------------ */
 
 rangeParent.addEventListener('click', function (eventInfo) {
@@ -128,6 +127,40 @@ video.addEventListener('timeupdate', function () {
 })
 
 /* ----------------Перемешение полосы------------------ */
+let lineFlag = false;
+
+rangeParent.addEventListener('mousedown', function (e) {
+    lineFlag = true;
+    volume = video.volume;
+})
+videoParent.addEventListener('mousemove', function (e) {
+    if(lineFlag){
+        const { offsetX } = e;
+        const parentWidth = rangeParent.clientWidth;
+        const percent = 100 * offsetX / parentWidth;
+        video.currentTime = video.duration * percent / 100;
+        video.volume = 0;
+        let pos = document.querySelectorAll('.d-none');
+        for(let i = 0; i < pos.length; i++) {
+            pos[i].style.display = 'none';
+        }
+    }
+})
+videoParent.addEventListener('mouseup', function () {
+    lineFlag = false;
+    video.volume = 1;
+    let pos = document.querySelectorAll('.d-none');
+    for(let i = 0; i < pos.length; i++) {
+        pos[i].style.display = 'block';
+    }
+})
+video.addEventListener('dblclick', function () {
+    if (video.paused) {
+        video.play()
+    }else {
+        video.pause()
+    }
+})
 
 
 

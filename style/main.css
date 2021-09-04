@@ -552,11 +552,11 @@
     margin-right: 10px;
     font-size: 25px;
     color: rgb(63, 63, 144);
+    display: none;
 }
 
 .video__volume {
     margin-right: 10px;
-    display: none;
     font-size: 25px;
     color: blue;
 }
