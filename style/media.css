@@ -1,4 +1,7 @@
 @media(max-width:1200px) {
+    .header__list{
+        padding: 40px 15px;
+    }
     .service__blocks {
         flex-wrap: wrap;
     }
@@ -10,7 +13,9 @@
     .dev__numbs {
         flex-wrap: wrap;
     }
-
+    .works__info{
+        padding: 0 15px;
+    }
     .works__cards {
         flex-wrap: wrap;
         justify-content: space-evenly;
@@ -24,9 +29,15 @@
         flex-wrap: wrap;
         justify-content: space-evenly;
     }
-
+    .dev__content{
+        padding-left: 15px;
+        padding-right: 15px;
+    }
     .product__card {
         margin-bottom: 20px;
+    }
+    .footer__content{
+        padding: 70px 15px;
     }
 
 }
@@ -281,6 +292,7 @@
     }
     .dev__info-link{
         margin-bottom: 15px;
+        padding: 0 15px;
     }
     .dev__img{
         margin-right: 0;
@@ -351,7 +363,7 @@
         margin-bottom: 20px;
     }
     .dev__info-desc{
-        padding: 0 5px;
+        padding: 0 15px;
     }
     .dev__line{
         margin-bottom: 15px;

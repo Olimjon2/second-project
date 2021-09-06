@@ -21,7 +21,6 @@ const watch = $('.play__button'),
 
 /*----------------- время продолжения---------- */
 video.addEventListener('loadedmetadata', (e) => {
-    console.log(e);
     const durTime = video.duration
     videoDuration.innerHTML = timeDecoder(durTime);
 })
@@ -54,13 +53,13 @@ play.addEventListener('click', function () {
 mute.addEventListener('click', function () {
         mute.style.display = 'none';
         onmute.style.display = 'block';
-        video.volume = 1;
+        video.muted = false;
 })
 
 onmute.addEventListener('click', function () {
         mute.style.display = 'block';
         onmute.style.display = 'none';
-        video.volume = 0;
+        video.muted = true;
 })
 
 function speedUp() {
@@ -101,16 +100,7 @@ let vol = false;
 volumeEl.addEventListener('mousedown', function (e) {
    vol = true; 
 })
-volumeEl.addEventListener('mousemove', function (e) {
-    if (vol) {
-        const { offsetX } = e;
-        const volWidth = volumeEl.clientWidth;
-        const percent = 100 * offsetX / volWidth;
-        console.log(percent/100);
-        // video.volume = percent/100  ;
-        
-    }
-})
+
 /* ------------------------------------ */
 
 rangeParent.addEventListener('click', function (eventInfo) {
